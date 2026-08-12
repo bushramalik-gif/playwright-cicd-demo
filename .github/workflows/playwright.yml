@@ -9,9 +9,7 @@ on:
 
 jobs:
   test:
-
     timeout-minutes: 60
-
     runs-on: ubuntu-latest
 
     steps:
@@ -48,6 +46,16 @@ jobs:
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
+
+      # ==============================
+      # Start Local Web Server
+      # ==============================
+
+      - name: Start Local Web Server
+        run: |
+          npx http-server . -p 5500 > server.log 2>&1 &
+          sleep 3
 
 
       # ==============================
