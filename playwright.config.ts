@@ -15,18 +15,15 @@ export default defineConfig({
 
   reporter: [
     ['list'],
-    [
-      'html',
-      {
-        outputFolder: 'playwright-report',
-        open: 'never',
-      },
-    ],
+    ['html', {
+      outputFolder: 'playwright-report',
+      open: 'never',
+    }],
     ['allure-playwright'],
   ],
 
   use: {
-    baseURL: 'http://127.0.0.1:5501/app',
+    baseURL: 'http://127.0.0.1:5500/app',
 
     headless: !!process.env.CI,
 
@@ -44,9 +41,9 @@ export default defineConfig({
   },
 
   webServer: {
-    command: 'npx http-server . -p 5501',
-    url: 'http://127.0.0.1:5501/app/login.html',
-    reuseExistingServer: true,
+    command: 'npx http-server . -p 5500',
+    url: 'http://127.0.0.1:5500/app/login.html',
+    reuseExistingServer: !process.env.CI,
     timeout: 120000,
   },
 
