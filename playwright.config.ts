@@ -15,21 +15,16 @@ export default defineConfig({
 
   reporter: [
     ['list'],
-    [
-      'html',
-      {
-        outputFolder: 'playwright-report',
-        open: 'never',
-      },
-    ],
+    ['html', {
+      outputFolder: 'playwright-report',
+      open: 'never',
+    }],
     ['allure-playwright'],
   ],
 
   use: {
-    // App folder is served directly by http-server
-    baseURL: 'http://127.0.0.1:5500',
+    baseURL: 'http://127.0.0.1:5500/app',
 
-    // Headless in GitHub Actions, headed locally
     headless: !!process.env.CI,
 
     viewport: {
@@ -37,7 +32,6 @@ export default defineConfig({
       height: 768,
     },
 
-    // Capture everything for Allure / GitHub artifacts
     screenshot: 'on',
     video: 'on',
     trace: 'on',
@@ -46,18 +40,16 @@ export default defineConfig({
     navigationTimeout: 30000,
   },
 
-  // Start the demo application before Playwright tests
   webServer: {
-    command: 'npx http-server ./app -p 5500',
-    url: 'http://127.0.0.1:5500/login.html',
-    reuseExistingServer: true,
+    command: 'npx http-server . -p 5500 -c-1',
+    url: 'http://127.0.0.1:5500/app/login.html',
     timeout: 120000,
+    reuseExistingServer: false,
   },
 
   projects: [
     {
       name: 'setup',
-
       testMatch: /auth\.setup\.ts/,
     },
 
@@ -66,8 +58,6 @@ export default defineConfig({
 
       use: {
         ...devices['Desktop Chrome'],
-
-        // Reuse login session created by setup
         storageState: 'playwright/.auth/user.json',
       },
 
