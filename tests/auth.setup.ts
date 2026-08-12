@@ -3,7 +3,7 @@ import { test as setup, expect } from '@playwright/test';
 const authFile = 'playwright/.auth/user.json';
 
 setup('authenticate', async ({ page }) => {
-  await page.goto('http://127.0.0.1:5500/app/login.html');
+ await page.goto('/login.html');
 
   await expect(page.locator('#username')).toBeVisible();
   await expect(page.locator('#password')).toBeVisible();
