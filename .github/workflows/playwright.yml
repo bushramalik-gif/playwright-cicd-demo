@@ -2,10 +2,10 @@ name: Playwright Tests
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
 
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   test:
@@ -49,17 +49,9 @@ jobs:
 
 
       # ==============================
-      # Start Local Web Server
-      # ==============================
-
-      - name: Start Local Web Server
-        run: |
-          npx http-server . -p 5500 > server.log 2>&1 &
-          sleep 3
-
-
-      # ==============================
       # Run Playwright Tests
+      # Playwright config starts the
+      # local web server automatically
       # ==============================
 
       - name: Run Playwright Tests
@@ -115,8 +107,8 @@ jobs:
 
 
       # ==============================
-      # Upload Playwright Test Results
-      # Screenshots / Videos / Traces
+      # Upload Screenshots / Videos /
+      # Traces
       # ==============================
 
       - name: Upload Test Results
