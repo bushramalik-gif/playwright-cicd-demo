@@ -15,10 +15,13 @@ export default defineConfig({
 
   reporter: [
     ['list'],
-    ['html', {
-      outputFolder: 'playwright-report',
-      open: 'never',
-    }],
+    [
+      'html',
+      {
+        outputFolder: 'playwright-report',
+        open: 'never',
+      },
+    ],
     ['allure-playwright'],
   ],
 
@@ -41,10 +44,10 @@ export default defineConfig({
   },
 
   webServer: {
-    command: 'npx http-server . -p 5500 -c-1',
+    command: 'npx http-server . -p 5500',
     url: 'http://127.0.0.1:5500/app/login.html',
-    timeout: 120000,
     reuseExistingServer: false,
+    timeout: 120000,
   },
 
   projects: [
