@@ -15,17 +15,22 @@ export default defineConfig({
 
   reporter: [
     ['list'],
-    ['html', {
-      outputFolder: 'playwright-report',
-      open: 'never',
-    }],
+    [
+      'html',
+      {
+        outputFolder: 'playwright-report',
+        open: 'never',
+      },
+    ],
     ['allure-playwright'],
   ],
 
   use: {
     baseURL: 'http://127.0.0.1:5500/app',
 
-    headless: false,
+    // Local: headed browser
+    // GitHub Actions: headless browser
+    headless: !!process.env.CI,
 
     viewport: {
       width: 1366,
@@ -48,7 +53,6 @@ export default defineConfig({
   projects: [
     {
       name: 'setup',
-
       testMatch: /auth\.setup\.ts/,
     },
 
@@ -57,7 +61,6 @@ export default defineConfig({
 
       use: {
         ...devices['Desktop Chrome'],
-
         storageState: 'playwright/.auth/user.json',
       },
 
