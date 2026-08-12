@@ -3,8 +3,9 @@ import { test as setup, expect } from '@playwright/test';
 const authFile = 'playwright/.auth/user.json';
 
 setup('authenticate', async ({ page }) => {
-  // Open login page
-  await page.goto('/login.html');
+
+  // Open login page through the configured baseURL
+  await page.goto('login.html');
 
   // Verify login fields
   await expect(page.locator('#username')).toBeVisible();
@@ -19,11 +20,12 @@ setup('authenticate', async ({ page }) => {
 
   // Verify successful login
   await page.waitForURL('**/dashboard.html');
+
   await expect(
     page.getByRole('heading', { name: 'Dashboard' })
   ).toBeVisible();
 
-  // Save authenticated browser state
+  // Save authenticated session
   await page.context().storageState({
     path: authFile,
   });
