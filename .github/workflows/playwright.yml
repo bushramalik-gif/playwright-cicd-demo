@@ -14,62 +14,26 @@ jobs:
 
     steps:
 
-      # ==============================
-      # Checkout Repository
-      # ==============================
-
       - name: Checkout Code
         uses: actions/checkout@v4
-
-
-      # ==============================
-      # Setup Node.js
-      # ==============================
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
-
-      # ==============================
-      # Install Dependencies
-      # ==============================
-
       - name: Install dependencies
         run: npm ci
-
-
-      # ==============================
-      # Install Playwright Browsers
-      # ==============================
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-
-      # ==============================
-      # Run Playwright Tests
-      # Playwright config starts the
-      # local web server automatically
-      # ==============================
-
       - name: Run Playwright Tests
         run: npx playwright test
-
-
-      # ==============================
-      # Generate Allure Report
-      # ==============================
 
       - name: Generate Allure Report
         if: ${{ !cancelled() }}
         run: npx allure generate allure-results -o allure-report
-
-
-      # ==============================
-      # Upload Playwright HTML Report
-      # ==============================
 
       - name: Upload Playwright Report
         if: ${{ !cancelled() }}
@@ -79,11 +43,6 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-
-      # ==============================
-      # Upload Allure Report
-      # ==============================
-
       - name: Upload Allure Report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
@@ -92,11 +51,6 @@ jobs:
           path: allure-report/
           retention-days: 30
 
-
-      # ==============================
-      # Upload Allure Results
-      # ==============================
-
       - name: Upload Allure Results
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
@@ -104,12 +58,6 @@ jobs:
           name: allure-results
           path: allure-results/
           retention-days: 30
-
-
-      # ==============================
-      # Upload Screenshots / Videos /
-      # Traces
-      # ==============================
 
       - name: Upload Test Results
         if: ${{ !cancelled() }}
