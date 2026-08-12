@@ -43,7 +43,7 @@ export default defineConfig({
   webServer: {
     command: 'npx http-server . -p 5500',
     url: 'http://127.0.0.1:5500/app/login.html',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 120000,
   },
 
