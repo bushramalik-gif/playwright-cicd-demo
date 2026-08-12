@@ -3,28 +3,36 @@ import { test as setup, expect } from '@playwright/test';
 const authFile = 'playwright/.auth/user.json';
 
 setup('authenticate', async ({ page }) => {
-  // Open login page
-  await page.goto('/login.html');
 
-  // Verify login fields
-  await expect(page.locator('#username')).toBeVisible();
-  await expect(page.locator('#password')).toBeVisible();
+  const loginUrl = '/app/login.html';
 
-  // Enter demo credentials
+  await page.goto(loginUrl, {
+    waitUntil: 'networkidle',
+  });
+
+  console.log('CURRENT URL:', page.url());
+  console.log('PAGE TITLE:', await page.title());
+  console.log('PAGE HTML:', (await page.locator('body').innerText()).substring(0, 1000));
+
+  await expect(page.locator('#username')).toBeVisible({
+    timeout: 15000,
+  });
+
+  await expect(page.locator('#password')).toBeVisible({
+    timeout: 15000,
+  });
+
   await page.locator('#username').fill('admin');
   await page.locator('#password').fill('admin123');
 
-  // Click Login
   await page.locator('#loginButton').click();
 
-  // Verify successful login
   await page.waitForURL('**/dashboard.html');
 
   await expect(
     page.getByRole('heading', { name: 'Dashboard' })
   ).toBeVisible();
 
-  // Save authenticated session
   await page.context().storageState({
     path: authFile,
   });
