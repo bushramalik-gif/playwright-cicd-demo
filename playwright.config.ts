@@ -15,15 +15,18 @@ export default defineConfig({
 
   reporter: [
     ['list'],
-    ['html', {
-      outputFolder: 'playwright-report',
-      open: 'never',
-    }],
+    [
+      'html',
+      {
+        outputFolder: 'playwright-report',
+        open: 'never',
+      },
+    ],
     ['allure-playwright'],
   ],
 
   use: {
-    baseURL: 'http://127.0.0.1:5500/app',
+    baseURL: 'http://127.0.0.1:5501/app',
 
     headless: !!process.env.CI,
 
@@ -40,13 +43,10 @@ export default defineConfig({
     navigationTimeout: 30000,
   },
 
-  // Start the demo application automatically
-  // This is required for GitHub Actions because
-  // localhost:5500 does not exist on the GitHub runner.
   webServer: {
-    command: 'npx http-server . -p 5500',
-    url: 'http://127.0.0.1:5500/app/login.html',
-    reuseExistingServer: !process.env.CI,
+    command: 'npx http-server . -p 5501',
+    url: 'http://127.0.0.1:5501/app/login.html',
+    reuseExistingServer: true,
     timeout: 120000,
   },
 
